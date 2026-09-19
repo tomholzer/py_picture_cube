@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+
+.vscode/
+.vscode-oss/
+
+data/settings.json
+data/current_session.json
+
+build/
+dist/
+*.spec

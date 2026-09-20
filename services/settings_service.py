@@ -7,7 +7,8 @@ from typing import Any
 
 class SettingsService:
     DEFAULT_SETTINGS: dict[str, Any] = {
-        "version": 1,
+        "version": 2,
+        "last_cube": None,
         "window": {
             "width": 1050,
             "height": 760,
@@ -36,16 +37,22 @@ class SettingsService:
             ) as file:
                 loaded = json.load(file)
 
-            return self._merge_with_defaults(loaded)
+            return self._merge_with_defaults(
+                loaded
+            )
 
         except (
             OSError,
             json.JSONDecodeError,
             TypeError,
+            ValueError,
         ):
             return self._default_copy()
 
-    def save(self, settings: dict[str, Any]) -> None:
+    def save(
+        self,
+        settings: dict[str, Any],
+    ) -> None:
         self.data_dir.mkdir(
             parents=True,
             exist_ok=True,
@@ -62,9 +69,12 @@ class SettingsService:
                 ensure_ascii=False,
             )
 
-    def _default_copy(self) -> dict[str, Any]:
+    def _default_copy(
+        self,
+    ) -> dict[str, Any]:
         return {
-            "version": 1,
+            "version": 2,
+            "last_cube": None,
             "window": {
                 "width": 1050,
                 "height": 760,
@@ -82,12 +92,29 @@ class SettingsService:
     ) -> dict[str, Any]:
         result = self._default_copy()
 
-        if not isinstance(loaded, dict):
+        if not isinstance(
+            loaded,
+            dict,
+        ):
             return result
 
-        window = loaded.get("window")
+        last_cube = loaded.get(
+            "last_cube"
+        )
 
-        if isinstance(window, dict):
+        if last_cube is not None:
+            result["last_cube"] = str(
+                last_cube
+            )
+
+        window = loaded.get(
+            "window"
+        )
+
+        if isinstance(
+            window,
+            dict,
+        ):
             result["window"]["width"] = int(
                 window.get(
                     "width",
@@ -102,9 +129,14 @@ class SettingsService:
                 )
             )
 
-        camera = loaded.get("camera")
+        camera = loaded.get(
+            "camera"
+        )
 
-        if isinstance(camera, dict):
+        if isinstance(
+            camera,
+            dict,
+        ):
             result["camera"]["yaw"] = float(
                 camera.get(
                     "yaw",

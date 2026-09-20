@@ -1,0 +1,439 @@
+{
+  "version": 2,
+  "stickers": [
+    {
+      "face": "front",
+      "row": 0,
+      "col": 0,
+      "target_face": 5,
+      "target_position": 1,
+      "rotation": 0
+    },
+    {
+      "face": "front",
+      "row": 0,
+      "col": 1,
+      "target_face": 5,
+      "target_position": 2,
+      "rotation": 0
+    },
+    {
+      "face": "front",
+      "row": 0,
+      "col": 2,
+      "target_face": 5,
+      "target_position": 3,
+      "rotation": 0
+    },
+    {
+      "face": "front",
+      "row": 1,
+      "col": 0,
+      "target_face": 2,
+      "target_position": 4,
+      "rotation": 0
+    },
+    {
+      "face": "front",
+      "row": 1,
+      "col": 1,
+      "target_face": 5,
+      "target_position": 5,
+      "rotation": 3
+    },
+    {
+      "face": "front",
+      "row": 1,
+      "col": 2,
+      "target_face": 3,
+      "target_position": 4,
+      "rotation": 2
+    },
+    {
+      "face": "front",
+      "row": 2,
+      "col": 0,
+      "target_face": 6,
+      "target_position": 9,
+      "rotation": 1
+    },
+    {
+      "face": "front",
+      "row": 2,
+      "col": 1,
+      "target_face": 3,
+      "target_position": 4,
+      "rotation": 1
+    },
+    {
+      "face": "front",
+      "row": 2,
+      "col": 2,
+      "target_face": 3,
+      "target_position": 1,
+      "rotation": 2
+    },
+    {
+      "face": "back",
+      "row": 0,
+      "col": 0,
+      "target_face": 2,
+      "target_position": 1,
+      "rotation": 0
+    },
+    {
+      "face": "back",
+      "row": 0,
+      "col": 1,
+      "target_face": 2,
+      "target_position": 2,
+      "rotation": 0
+    },
+    {
+      "face": "back",
+      "row": 0,
+      "col": 2,
+      "target_face": 2,
+      "target_position": 3,
+      "rotation": 0
+    },
+    {
+      "face": "back",
+      "row": 1,
+      "col": 0,
+      "target_face": 2,
+      "target_position": 8,
+      "rotation": 1
+    },
+    {
+      "face": "back",
+      "row": 1,
+      "col": 1,
+      "target_face": 2,
+      "target_position": 5,
+      "rotation": 0
+    },
+    {
+      "face": "back",
+      "row": 1,
+      "col": 2,
+      "target_face": 6,
+      "target_position": 2,
+      "rotation": 1
+    },
+    {
+      "face": "back",
+      "row": 2,
+      "col": 0,
+      "target_face": null,
+      "target_position": null,
+      "rotation": 0
+    },
+    {
+      "face": "back",
+      "row": 2,
+      "col": 1,
+      "target_face": null,
+      "target_position": null,
+      "rotation": 0
+    },
+    {
+      "face": "back",
+      "row": 2,
+      "col": 2,
+      "target_face": null,
+      "target_position": null,
+      "rotation": 0
+    },
+    {
+      "face": "left",
+      "row": 0,
+      "col": 0,
+      "target_face": 3,
+      "target_position": 7,
+      "rotation": 2
+    },
+    {
+      "face": "left",
+      "row": 0,
+      "col": 1,
+      "target_face": 3,
+      "target_position": 8,
+      "rotation": 2
+    },
+    {
+      "face": "left",
+      "row": 0,
+      "col": 2,
+      "target_face": 3,
+      "target_position": 9,
+      "rotation": 2
+    },
+    {
+      "face": "left",
+      "row": 1,
+      "col": 0,
+      "target_face": null,
+      "target_position": null,
+      "rotation": 0
+    },
+    {
+      "face": "left",
+      "row": 1,
+      "col": 1,
+      "target_face": null,
+      "target_position": null,
+      "rotation": 0
+    },
+    {
+      "face": "left",
+      "row": 1,
+      "col": 2,
+      "target_face": null,
+      "target_position": null,
+      "rotation": 0
+    },
+    {
+      "face": "left",
+      "row": 2,
+      "col": 0,
+      "target_face": null,
+      "target_position": null,
+      "rotation": 0
+    },
+    {
+      "face": "left",
+      "row": 2,
+      "col": 1,
+      "target_face": null,
+      "target_position": null,
+      "rotation": 0
+    },
+    {
+      "face": "left",
+      "row": 2,
+      "col": 2,
+      "target_face": null,
+      "target_position": null,
+      "rotation": 0
+    },
+    {
+      "face": "right",
+      "row": 0,
+      "col": 0,
+      "target_face": 4,
+      "target_position": 1,
+      "rotation": 0
+    },
+    {
+      "face": "right",
+      "row": 0,
+      "col": 1,
+      "target_face": 4,
+      "target_position": 2,
+      "rotation": 0
+    },
+    {
+      "face": "right",
+      "row": 0,
+      "col": 2,
+      "target_face": 4,
+      "target_position": 3,
+      "rotation": 0
+    },
+    {
+      "face": "right",
+      "row": 1,
+      "col": 0,
+      "target_face": 5,
+      "target_position": 4,
+      "rotation": 0
+    },
+    {
+      "face": "right",
+      "row": 1,
+      "col": 1,
+      "target_face": 3,
+      "target_position": null,
+      "rotation": 0
+    },
+    {
+      "face": "right",
+      "row": 1,
+      "col": 2,
+      "target_face": 6,
+      "target_position": 6,
+      "rotation": 0
+    },
+    {
+      "face": "right",
+      "row": 2,
+      "col": 0,
+      "target_face": 5,
+      "target_position": 7,
+      "rotation": 0
+    },
+    {
+      "face": "right",
+      "row": 2,
+      "col": 1,
+      "target_face": null,
+      "target_position": null,
+      "rotation": 0
+    },
+    {
+      "face": "right",
+      "row": 2,
+      "col": 2,
+      "target_face": null,
+      "target_position": null,
+      "rotation": 0
+    },
+    {
+      "face": "up",
+      "row": 0,
+      "col": 0,
+      "target_face": 1,
+      "target_position": 3,
+      "rotation": 0
+    },
+    {
+      "face": "up",
+      "row": 0,
+      "col": 1,
+      "target_face": 1,
+      "target_position": 6,
+      "rotation": 0
+    },
+    {
+      "face": "up",
+      "row": 0,
+      "col": 2,
+      "target_face": 1,
+      "target_position": 9,
+      "rotation": 0
+    },
+    {
+      "face": "up",
+      "row": 1,
+      "col": 0,
+      "target_face": 1,
+      "target_position": 2,
+      "rotation": 0
+    },
+    {
+      "face": "up",
+      "row": 1,
+      "col": 1,
+      "target_face": 1,
+      "target_position": 5,
+      "rotation": 0
+    },
+    {
+      "face": "up",
+      "row": 1,
+      "col": 2,
+      "target_face": 1,
+      "target_position": 8,
+      "rotation": 0
+    },
+    {
+      "face": "up",
+      "row": 2,
+      "col": 0,
+      "target_face": 1,
+      "target_position": 1,
+      "rotation": 0
+    },
+    {
+      "face": "up",
+      "row": 2,
+      "col": 1,
+      "target_face": 1,
+      "target_position": 4,
+      "rotation": 0
+    },
+    {
+      "face": "up",
+      "row": 2,
+      "col": 2,
+      "target_face": 1,
+      "target_position": 7,
+      "rotation": 0
+    },
+    {
+      "face": "down",
+      "row": 0,
+      "col": 0,
+      "target_face": null,
+      "target_position": null,
+      "rotation": 0
+    },
+    {
+      "face": "down",
+      "row": 0,
+      "col": 1,
+      "target_face": 3,
+      "target_position": 2,
+      "rotation": 0
+    },
+    {
+      "face": "down",
+      "row": 0,
+      "col": 2,
+      "target_face": 2,
+      "target_position": 9,
+      "rotation": 3
+    },
+    {
+      "face": "down",
+      "row": 1,
+      "col": 0,
+      "target_face": 6,
+      "target_position": 4,
+      "rotation": 0
+    },
+    {
+      "face": "down",
+      "row": 1,
+      "col": 1,
+      "target_face": 6,
+      "target_position": 5,
+      "rotation": 1
+    },
+    {
+      "face": "down",
+      "row": 1,
+      "col": 2,
+      "target_face": 2,
+      "target_position": 6,
+      "rotation": 0
+    },
+    {
+      "face": "down",
+      "row": 2,
+      "col": 0,
+      "target_face": null,
+      "target_position": null,
+      "rotation": 0
+    },
+    {
+      "face": "down",
+      "row": 2,
+      "col": 1,
+      "target_face": null,
+      "target_position": null,
+      "rotation": 0
+    },
+    {
+      "face": "down",
+      "row": 2,
+      "col": 2,
+      "target_face": 6,
+      "target_position": 7,
+      "rotation": 3
+    }
+  ],
+  "cube_id": "a2c5ac9bb3aa",
+  "name": "Kostka 1"
+}

@@ -317,12 +317,10 @@ class CubeMapper:
             current_coordinate,
             positions,
         ) in current_groups.items():
-
             current_type = self._cubie_type(
                 current_coordinate
             )
 
-            # Kolik samolepek má mít daný fyzický kámen.
             expected_sticker_count = {
                 "střed": 1,
                 "hrana": 2,
@@ -368,10 +366,6 @@ class CubeMapper:
                     f"S{sticker.target_face}/"
                     f"{sticker.target_position}"
                 )
-
-                # -----------------------------------------
-                # Kontrola typu cílové pozice.
-                # -----------------------------------------
 
                 target_position_type = (
                     self._target_position_type(
@@ -432,11 +426,6 @@ class CubeMapper:
             if not target_coordinates:
                 continue
 
-            # ---------------------------------------------
-            # Všechny obrázky jednoho fyzického kamene
-            # musí ukazovat na tentýž cílový kámen.
-            # ---------------------------------------------
-
             unique_targets = set(
                 target_coordinates
             )
@@ -456,10 +445,8 @@ class CubeMapper:
                 target_coordinates[0]
             )
 
-            target_type = (
-                self._cubie_type(
-                    target_coordinate
-                )
+            target_type = self._cubie_type(
+                target_coordinate
             )
 
             if target_type != current_type:
@@ -471,11 +458,6 @@ class CubeMapper:
                 )
 
                 continue
-
-            # ---------------------------------------------
-            # Stejný cílový fyzický kámen nesmí být
-            # použit na dvou různých místech.
-            # ---------------------------------------------
 
             old_current = (
                 used_target_cubies.get(
@@ -590,6 +572,25 @@ class CubeMapper:
                 "vyřeší rozmístění kamenů; orientaci "
                 "středů budeme řešit v samostatné fázi."
             )
+
+    def _rotate_target_grid(
+        self,
+        row: int,
+        col: int,
+        rotation: int,
+    ) -> tuple[int, int]:
+        rotation %= 4
+
+        for _ in range(rotation):
+            row, col = (
+                col,
+                2 - row,
+            )
+
+        return (
+            row,
+            col,
+        )
 
     def _cubie_coordinate(
         self,

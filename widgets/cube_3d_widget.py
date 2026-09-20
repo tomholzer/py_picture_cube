@@ -666,13 +666,9 @@ class Cube3DWidget(QWidget):
         ):
             self._draw_position(
                 painter=painter,
-                center=item.center,
-                position=(
-                    sticker.target_position
-                ),
-                rotation=(
-                    sticker.rotation
-                ),
+                item=item,
+                position=sticker.target_position,
+                rotation=sticker.rotation,
                 color=text_color,
             )
 
@@ -692,17 +688,57 @@ class Cube3DWidget(QWidget):
     def _draw_position(
         self,
         painter: QPainter,
-        center: QPointF,
+        item: ProjectedSticker,
         position: int,
         rotation: int,
         color: QColor,
     ) -> None:
         painter.save()
 
-        painter.translate(
-            center
+        # -------------------------------------------------
+        # Orientace samotného čtverce na obrazovce.
+        #
+        # Polygon má body:
+        # 0 = levý horní
+        # 1 = pravý horní
+        # 2 = pravý dolní
+        # 3 = levý dolní
+        #
+        # Směr 0 -> 1 tedy určuje "vodorovný" směr
+        # konkrétního čtverce kostky.
+        # -------------------------------------------------
+
+        top_left = item.polygon[0]
+        top_right = item.polygon[1]
+
+        dx = (
+            top_right.x()
+            - top_left.x()
         )
 
+        dy = (
+            top_right.y()
+            - top_left.y()
+        )
+
+        face_angle = math.degrees(
+            math.atan2(
+                dy,
+                dx,
+            )
+        )
+
+        painter.translate(
+            item.center
+        )
+
+        # Nejprve natočení podle aktuálního pohledu na kostku.
+        # Tím číslo zůstává pevně spojeno se čtvercem.
+        painter.rotate(
+            face_angle
+        )
+
+        # Teprve potom skutečné natočení obrázkového dílku.
         painter.rotate(
             rotation * 90
         )
@@ -761,6 +797,8 @@ class Cube3DWidget(QWidget):
             text,
         )
 
+        # U 6 a 9 je čára součást značky.
+        # Otáčí se tedy zároveň s číslem.
         if position in (6, 9):
             underline_y = (
                 baseline_y
@@ -788,8 +826,56 @@ class Cube3DWidget(QWidget):
         target_face: int,
         color: QColor,
     ) -> None:
-        polygon_rect = (
-            item.polygon.boundingRect()
+        painter.save()
+
+        top_left = item.polygon[0]
+        top_right = item.polygon[1]
+        bottom_left = item.polygon[3]
+
+        # Směr horní hrany čtverce.
+        dx = (
+            top_right.x()
+            - top_left.x()
+        )
+
+        dy = (
+            top_right.y()
+            - top_left.y()
+        )
+
+        face_angle = math.degrees(
+            math.atan2(
+                dy,
+                dx,
+            )
+        )
+
+        # Bod uvnitř čtverce poblíž levého horního rohu.
+        #
+        # Není počítán z boundingRect(), ale přímo z hran
+        # konkrétního promítnutého čtverce.
+        anchor_x = (
+            top_left.x()
+            + (top_right.x() - top_left.x()) * 0.20
+            + (bottom_left.x() - top_left.x()) * 0.20
+        )
+
+        anchor_y = (
+            top_left.y()
+            + (top_right.y() - top_left.y()) * 0.20
+            + (bottom_left.y() - top_left.y()) * 0.20
+        )
+
+        painter.translate(
+            QPointF(
+                anchor_x,
+                anchor_y,
+            )
+        )
+
+        # Text se natočí stejně jako samotný čtverec.
+        painter.rotate(
+            face_angle
         )
 
         font = QFont()
@@ -819,15 +905,24 @@ class Cube3DWidget(QWidget):
             color
         )
 
+        text = f"S{target_face}"
+
+        metrics = painter.fontMetrics()
+
+        rect = metrics.boundingRect(
+            text
+        )
+
         painter.drawText(
             QPointF(
-                polygon_rect.left()
-                + 5,
-                polygon_rect.top()
-                + 15,
+                -rect.width() / 2,
+                rect.height() / 2
+                - metrics.descent(),
             ),
-            f"S{target_face}",
+            text,
         )
+
+        painter.restore()
 
     def mouseMoveEvent(
         self,

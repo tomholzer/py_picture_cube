@@ -125,24 +125,24 @@
       "face": "back",
       "row": 2,
       "col": 0,
-      "target_face": null,
-      "target_position": null,
+      "target_face": 4,
+      "target_position": 4,
       "rotation": 0
     },
     {
       "face": "back",
       "row": 2,
       "col": 1,
-      "target_face": null,
-      "target_position": null,
+      "target_face": 4,
+      "target_position": 8,
       "rotation": 0
     },
     {
       "face": "back",
       "row": 2,
       "col": 2,
-      "target_face": null,
-      "target_position": null,
+      "target_face": 4,
+      "target_position": 6,
       "rotation": 0
     },
     {
@@ -173,48 +173,48 @@
       "face": "left",
       "row": 1,
       "col": 0,
-      "target_face": null,
-      "target_position": null,
+      "target_face": 2,
+      "target_position": 7,
       "rotation": 0
     },
     {
       "face": "left",
       "row": 1,
       "col": 1,
-      "target_face": null,
-      "target_position": null,
+      "target_face": 3,
+      "target_position": 6,
       "rotation": 0
     },
     {
       "face": "left",
       "row": 1,
       "col": 2,
-      "target_face": null,
-      "target_position": null,
+      "target_face": 3,
+      "target_position": 3,
       "rotation": 0
     },
     {
       "face": "left",
       "row": 2,
       "col": 0,
-      "target_face": null,
-      "target_position": null,
+      "target_face": 6,
+      "target_position": 3,
       "rotation": 0
     },
     {
       "face": "left",
       "row": 2,
       "col": 1,
-      "target_face": null,
-      "target_position": null,
+      "target_face": 5,
+      "target_position": 8,
       "rotation": 0
     },
     {
       "face": "left",
       "row": 2,
       "col": 2,
-      "target_face": null,
-      "target_position": null,
+      "target_face": 4,
+      "target_position": 9,
       "rotation": 0
     },
     {
@@ -253,8 +253,8 @@
       "face": "right",
       "row": 1,
       "col": 1,
-      "target_face": 1,
-      "target_position": null,
+      "target_face": 3,
+      "target_position": 5,
       "rotation": 0
     },
     {
@@ -277,16 +277,16 @@
       "face": "right",
       "row": 2,
       "col": 1,
-      "target_face": null,
-      "target_position": null,
+      "target_face": 5,
+      "target_position": 6,
       "rotation": 0
     },
     {
       "face": "right",
       "row": 2,
       "col": 2,
-      "target_face": null,
-      "target_position": null,
+      "target_face": 6,
+      "target_position": 1,
       "rotation": 0
     },
     {
@@ -365,8 +365,8 @@
       "face": "down",
       "row": 0,
       "col": 0,
-      "target_face": null,
-      "target_position": null,
+      "target_face": 4,
+      "target_position": 7,
       "rotation": 0
     },
     {
@@ -413,16 +413,16 @@
       "face": "down",
       "row": 2,
       "col": 0,
-      "target_face": null,
-      "target_position": null,
+      "target_face": 5,
+      "target_position": 9,
       "rotation": 0
     },
     {
       "face": "down",
       "row": 2,
       "col": 1,
-      "target_face": null,
-      "target_position": null,
+      "target_face": 6,
+      "target_position": 8,
       "rotation": 0
     },
     {
@@ -434,6 +434,6 @@
       "rotation": 3
     }
   ],
-  "cube_id": "a2c5ac9bb3aa",
-  "name": "Kostka 1"
+  "cube_id": "6b51c25bd86f",
+  "name": "Kostka 1 - kopie"
 }

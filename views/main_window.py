@@ -27,6 +27,7 @@ from PySide6.QtWidgets import (
 from models.cube_state import StickerPosition
 from services.session_service import SessionService
 from services.settings_service import SettingsService
+from services.solver_service import SolverService
 from widgets.cube_3d_widget import Cube3DWidget
 
 
@@ -192,6 +193,8 @@ class MainWindow(QMainWindow):
         self.settings_service = (
             SettingsService()
         )
+
+        self.solver_service = SolverService()
 
         self.settings = (
             self.settings_service.load()
@@ -823,6 +826,46 @@ class MainWindow(QMainWindow):
 
         layout.addWidget(
             save_info
+        )
+
+        solver_title = QLabel(
+            "Solver"
+        )
+
+        solver_title.setFont(
+            title_font
+        )
+
+        layout.addWidget(
+            solver_title
+        )
+
+        self.validate_cube_button = QPushButton(
+            "Zkontrolovat kostku"
+        )
+
+        self.validate_cube_button.clicked.connect(
+            self._validate_cube
+        )
+
+        layout.addWidget(
+            self.validate_cube_button
+        )
+
+        self.solve_cube_button = QPushButton(
+            "Spočítat řešení"
+        )
+
+        self.solve_cube_button.clicked.connect(
+            self._solve_cube
+        )
+
+        layout.addWidget(
+            self.solve_cube_button
+        )
+
+        layout.addSpacing(
+            12
         )
 
         self.clear_button = QPushButton(
@@ -1684,6 +1727,132 @@ class MainWindow(QMainWindow):
         )
 
         self.settings = settings
+
+
+    def _validate_cube(
+        self,
+    ) -> None:
+        self._save_current_cube()
+
+        result = self.solver_service.validate(
+            self.cube_state
+        )
+
+        if not result.is_valid:
+            text = "\n\n".join(
+                result.errors
+            )
+
+            QMessageBox.warning(
+                self,
+                "Kostka není platná",
+                text,
+            )
+
+            return
+
+        mapping_lines = []
+
+        for target_face in sorted(
+            result.target_face_to_physical
+        ):
+            physical_face = (
+                result.target_face_to_physical[
+                    target_face
+                ]
+            )
+
+            letter = (
+                result.target_face_to_letter[
+                    target_face
+                ]
+            )
+
+            mapping_lines.append(
+                f"Strana {target_face} "
+                f"= {letter} "
+                f"({physical_face.value})"
+            )
+
+        text = (
+            "Kostka je fyzicky platná.\n\n"
+            + "\n".join(
+                mapping_lines
+            )
+        )
+
+        if result.warnings:
+            text += (
+                "\n\nUpozornění:\n"
+                + "\n".join(
+                    result.warnings
+                )
+            )
+
+        QMessageBox.information(
+            self,
+            "Kontrola kostky",
+            text,
+        )
+
+    def _solve_cube(
+        self,
+    ) -> None:
+        self._save_current_cube()
+
+        QMessageBox.information(
+            self,
+            "Výpočet řešení",
+            (
+                "Spouštím solver.\n\n"
+                "Při prvním spuštění může příprava "
+                "solveru trvat desítky sekund."
+            ),
+        )
+
+        result = self.solver_service.solve(
+            self.cube_state
+        )
+
+        if not result.success:
+            text = "\n\n".join(
+                result.errors
+            )
+
+            QMessageBox.warning(
+                self,
+                "Řešení nelze vytvořit",
+                text,
+            )
+
+            return
+
+        if not result.moves:
+            text = (
+                "Rozmístění kamenů je už vyřešené."
+            )
+
+        else:
+            text = (
+                f"Počet tahů: {len(result.moves)}\n\n"
+                + " ".join(
+                    result.moves
+                )
+            )
+
+        if result.warnings:
+            text += (
+                "\n\nUpozornění:\n"
+                + "\n".join(
+                    result.warnings
+                )
+            )
+
+        QMessageBox.information(
+            self,
+            "Řešení kostky",
+            text,
+        )
 
     def _clear_cube(
         self,

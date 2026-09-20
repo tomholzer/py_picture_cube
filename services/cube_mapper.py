@@ -38,6 +38,31 @@ class CubeMapper:
         FaceName.BACK,
     )
 
+    def _target_position_type(
+        self,
+        target_position: int,
+    ) -> str:
+        if target_position == 5:
+            return "střed"
+
+        if target_position in (
+            2,
+            4,
+            6,
+            8,
+        ):
+            return "hrana"
+
+        if target_position in (
+            1,
+            3,
+            7,
+            9,
+        ):
+            return "roh"
+
+        return "neznámý"
+
     def map(
         self,
         cube_state: CubeState,
@@ -269,15 +294,11 @@ class CubeMapper:
             list[StickerPosition],
         ] = {}
 
-        for position in (
-            cube_state.iter_positions()
-        ):
-            coordinate = (
-                self._cubie_coordinate(
-                    position.face,
-                    position.row,
-                    position.col,
-                )
+        for position in cube_state.iter_positions():
+            coordinate = self._cubie_coordinate(
+                position.face,
+                position.row,
+                position.col,
             )
 
             current_groups.setdefault(
@@ -296,6 +317,36 @@ class CubeMapper:
             current_coordinate,
             positions,
         ) in current_groups.items():
+
+            current_type = self._cubie_type(
+                current_coordinate
+            )
+
+            # Kolik samolepek má mít daný fyzický kámen.
+            expected_sticker_count = {
+                "střed": 1,
+                "hrana": 2,
+                "roh": 3,
+            }.get(
+                current_type
+            )
+
+            if (
+                expected_sticker_count is not None
+                and len(positions)
+                != expected_sticker_count
+            ):
+                errors.append(
+                    f"Chybná geometrie fyzického kamene "
+                    f"{current_coordinate}: "
+                    f"{current_type} má "
+                    f"{len(positions)} políček, "
+                    f"očekáváno "
+                    f"{expected_sticker_count}."
+                )
+
+                continue
+
             target_coordinates: list[
                 Vector3
             ] = []
@@ -313,6 +364,36 @@ class CubeMapper:
                 ):
                     continue
 
+                labels.append(
+                    f"S{sticker.target_face}/"
+                    f"{sticker.target_position}"
+                )
+
+                # -----------------------------------------
+                # Kontrola typu cílové pozice.
+                # -----------------------------------------
+
+                target_position_type = (
+                    self._target_position_type(
+                        sticker.target_position
+                    )
+                )
+
+                if (
+                    target_position_type
+                    != current_type
+                ):
+                    errors.append(
+                        f"Na fyzické pozici typu "
+                        f"'{current_type}' je zadán dílek "
+                        f"S{sticker.target_face}/"
+                        f"{sticker.target_position}, "
+                        f"který patří na pozici typu "
+                        f"'{target_position_type}'."
+                    )
+
+                    continue
+
                 target_physical_face = (
                     target_face_to_physical.get(
                         sticker.target_face
@@ -320,6 +401,12 @@ class CubeMapper:
                 )
 
                 if target_physical_face is None:
+                    errors.append(
+                        f"Nelze určit cílovou stranu "
+                        f"pro S{sticker.target_face}/"
+                        f"{sticker.target_position}."
+                    )
+
                     continue
 
                 target_row = (
@@ -342,13 +429,13 @@ class CubeMapper:
                     target_coordinate
                 )
 
-                labels.append(
-                    f"S{sticker.target_face}/"
-                    f"{sticker.target_position}"
-                )
-
             if not target_coordinates:
                 continue
+
+            # ---------------------------------------------
+            # Všechny obrázky jednoho fyzického kamene
+            # musí ukazovat na tentýž cílový kámen.
+            # ---------------------------------------------
 
             unique_targets = set(
                 target_coordinates
@@ -356,21 +443,17 @@ class CubeMapper:
 
             if len(unique_targets) != 1:
                 errors.append(
-                    "Na jednom fyzickém kameni jsou "
-                    "dílky, které k sobě nemohou patřit: "
-                    + ", ".join(labels)
-                    + "."
+                    f"Fyzický {current_type} obsahuje "
+                    "dílky, které k sobě nepatří:\n"
+                    + ", ".join(
+                        labels
+                    )
                 )
+
                 continue
 
             target_coordinate = (
                 target_coordinates[0]
-            )
-
-            current_type = (
-                self._cubie_type(
-                    current_coordinate
-                )
             )
 
             target_type = (
@@ -379,14 +462,20 @@ class CubeMapper:
                 )
             )
 
-            if current_type != target_type:
+            if target_type != current_type:
                 errors.append(
-                    "Dílek "
-                    + ", ".join(labels)
-                    + " je vložen do jiného typu pozice "
-                    f"({current_type} -> {target_type})."
+                    f"Kámen {', '.join(labels)} "
+                    f"je fyzicky '{current_type}', "
+                    f"ale cílově vychází jako "
+                    f"'{target_type}'."
                 )
+
                 continue
+
+            # ---------------------------------------------
+            # Stejný cílový fyzický kámen nesmí být
+            # použit na dvou různých místech.
+            # ---------------------------------------------
 
             old_current = (
                 used_target_cubies.get(
@@ -400,11 +489,14 @@ class CubeMapper:
                 != current_coordinate
             ):
                 errors.append(
-                    "Stejný fyzický kámen je podle "
-                    "zadaných pozic použit dvakrát: "
-                    + ", ".join(labels)
-                    + "."
+                    "Stejný cílový kámen je použit "
+                    "na více fyzických místech: "
+                    + ", ".join(
+                        labels
+                    )
                 )
+
+                continue
 
             used_target_cubies[
                 target_coordinate
